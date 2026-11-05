@@ -12,7 +12,7 @@ class Vehiculo{
 	public:
 		Vehiculo();
 		void mostrarDatos();
-		// cambiarVelocidad();
+		void cambiarVelocidad(float);
 };
 
 Vehiculo :: Vehiculo(string, string, string, float){
@@ -25,7 +25,12 @@ Vehiculo :: Vehiculo(string, string, string, float){
 void Vehiculo :: mostrarDatos() {
 	cout << numeroPlaca << "de color " << color << ", de la marca " << marca << "y su velocimetro es de " << velocimetro << " km/h." << endl;
 }
-	
+
+void Vehiculo :: cambiarVelocidad(float nuevaVelocidad){
+	if(nuevaVelocidad >= 0) {
+		velocimetro = nuevaVelocidad;
+	}
+}
 //CLASE DERIVADA: AUTOMOVIL
 class Automovil : public Vehiculo {
 	private:
@@ -34,14 +39,17 @@ class Automovil : public Vehiculo {
 	private:
 		Automovil(string, string, string, float, int, int);
 		void mostrarAutomovil();
-		//subirPasajeros();
-		//bajarPasajeros();
+		//void subirPasajeros(int);
+		//void bajarPasajeros(int);
 };
 
 Automovil :: Automovil(string n, string c, string m, float v, int p, int x) : Vehiculo(n, c, m, v){
 	cantidadPuertas = p;
 	cantidadPasajeros = x;
 }
+
+//void Automovil :: subirPasajeros(int nuevosPasajeros){
+//void Automovil :: bajarPasajeros(int nuevosPasajeros){
 
 void Automovil :: mostrarAutomovil(){
 	mostrarDatos();
@@ -55,7 +63,7 @@ class Camion : public Vehiculo {
 	public:
 		Camion(string, string, string, float, int);
 		void mostrarCamion();
-		//cambiarCarga();
+		void cambiarCarga(float);
 };
 
 Camion :: Camion(string n, string c, string m, float v, int g) : Vehiculo(n, c, m, v){
@@ -67,6 +75,11 @@ void Camion :: mostrarCamion() {
 	cout << "\El camion tiene una carga de " << carga << " kg." << endl;
 }
 
+void Camion :: cambiarCarga(float nuevaCarga){
+	if(nuevaCarga >= 0){
+		carga = nuevaCarga;
+	}
+}
 //PROGRAMA PRINCIPAL
 int main(){
 	//string ;
