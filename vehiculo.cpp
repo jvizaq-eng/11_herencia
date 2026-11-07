@@ -1,98 +1,123 @@
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
 using namespace std;
 
-//CLASE BASE: VEHICULO
-class Vehiculo{
-	private:
-		string numeroPlaca;
-		string color;
-		string marca;
-		float velocimetro;
-	public:
-		Vehiculo();
-		void mostrarDatos();
-		void cambiarVelocidad(float);
+// CLASE BASE: VEHICULO
+class Vehiculo {
+protected:
+    string numeroPlaca;
+    string color;
+    string marca;
+    float velocimetro;
+
+public: 
+    Vehiculo(string n, string c, string m, float v);
+    void mostrarDatos();
+    void cambiarVelocidad(float nuevaVelocidad);
 };
 
-Vehiculo :: Vehiculo(string, string, string, float){
-	numeroPlaca = n;
-	color = c;
-	marca = m;
-	velocimetro = v;
+Vehiculo::Vehiculo(string n, string c, string m, float v) {
+    numeroPlaca = n;
+    color = c;
+    marca = m;
+    velocimetro = v;
 }
 
-void Vehiculo :: mostrarDatos() {
-	cout << numeroPlaca << "de color " << color << ", de la marca " << marca << "y su velocimetro es de " << velocimetro << " km/h." << endl;
+void Vehiculo::mostrarDatos() {
+    cout << "Placa: " << numeroPlaca << " | Color: " << color << " | Marca: " << marca << " | Velocidad: " << velocimetro << " km/h." << endl;
 }
 
-void Vehiculo :: cambiarVelocidad(float nuevaVelocidad){
-	if(nuevaVelocidad >= 0) {
-		velocimetro = nuevaVelocidad;
-	}
+void Vehiculo::cambiarVelocidad(float nuevaVelocidad) {
+    if (nuevaVelocidad >= 0) {
+        velocimetro = nuevaVelocidad;
+    }
 }
-//CLASE DERIVADA: AUTOMOVIL
+
+// CLASE DERIVADA: AUTOMOVIL
 class Automovil : public Vehiculo {
-	private:
-		int cantidadPuertas;
-		int cantidadPasajeros;
-	private:
-		Automovil(string, string, string, float, int, int);
-		void mostrarAutomovil();
-		//void subirPasajeros(int);
-		//void bajarPasajeros(int);
+private: 
+    int cantidadPuertas;
+    int cantidadPasajeros;
+
+public:
+    Automovil(string n, string c, string m, float v, int p, int pas);
+    void mostrarAutomovil();
+    void subirPasajeros(int nuevosPasajeros);
+    void bajarPasajeros(int pasajerosBajan);
 };
-
-Automovil :: Automovil(string n, string c, string m, float v, int p, int x) : Vehiculo(n, c, m, v){
-	cantidadPuertas = p;
-	cantidadPasajeros = x;
+Automovil::Automovil(string n, string c, string m, float v, int p, int pas) 
+    : Vehiculo(n, c, m, v) {
+    cantidadPuertas = p;
+    cantidadPasajeros = pas;
 }
 
-//void Automovil :: subirPasajeros(int nuevosPasajeros){
-//void Automovil :: bajarPasajeros(int nuevosPasajeros){
-
-void Automovil :: mostrarAutomovil(){
-	mostrarDatos();
-	cout << "\El automovil tiene " << cantidadPuertas << " puertas y " << cantidadPasajeros << " pasajeros." << endl;
+void Automovil::subirPasajeros(int nuevosPasajeros) {
+    if (nuevosPasajeros > 0) {
+        cantidadPasajeros += nuevosPasajeros;
+    }
 }
 
-//CLASE DERIVADA: CAMION
+void Automovil::bajarPasajeros(int pasajerosBajan) {
+    if (pasajerosBajan > 0 && pasajerosBajan <= cantidadPasajeros) {
+        cantidadPasajeros -= pasajerosBajan;
+    }
+}
+
+void Automovil::mostrarAutomovil() {
+    mostrarDatos();
+    cout << "  -> Puertas: " << cantidadPuertas << " | Pasajeros: " << cantidadPasajeros << endl;
+}
+
+// CLASE DERIVADA: CAMION
 class Camion : public Vehiculo {
-	private:
-		float carga;
-	public:
-		Camion(string, string, string, float, int);
-		void mostrarCamion();
-		void cambiarCarga(float);
+private:
+    float carga;
+
+public:
+    Camion(string n, string c, string m, float v, float car);
+    void mostrarCamion();
+    void cambiarCarga(float nuevaCarga);
 };
 
-Camion :: Camion(string n, string c, string m, float v, int g) : Vehiculo(n, c, m, v){
-	carga = g;
+Camion::Camion(string n, string c, string m, float v, float car)  : Vehiculo(n, c, m, v) {
+    carga = car;
 }
 
-void Camion :: mostrarCamion() {
-	mostrarDatos();
-	cout << "\El camion tiene una carga de " << carga << " kg." << endl;
+void Camion::mostrarCamion() {
+    mostrarDatos();
+    cout << "  -> Carga: " << carga << " kg" << endl;
 }
 
-void Camion :: cambiarCarga(float nuevaCarga){
-	if(nuevaCarga >= 0){
-		carga = nuevaCarga;
-	}
+void Camion::cambiarCarga(float nuevaCarga) {
+    if (nuevaCarga >= 0) {
+        carga = nuevaCarga;
+    }
 }
-//PROGRAMA PRINCIPAL
-int main(){
-	//string ;
-	
-	Vehiculo j("sha-", "negro", "Toyota", "90");
-	j.mostrarDatos();
-	cout << endl;
-	
-	Automvil s("son-", "azul", "Subaru", "67", "4", "20");
-	k.mostrarDatos();
-	cout << endl;
-	
-	Camion t("tai-", "amarillo", "Suzuki", "76", "50");
-	t.mostrarDatos();
-	cout << endl;	
+
+// PROGRAMA PRINCIPAL
+int main() {
+    cout << "--- AUTOMOVIL ---" << endl;
+    Automovil j("SHA-203", "Negro", "Subaru", 60.0, 4, 6);
+    cout << "Estado inicial:" << endl;
+    j.mostrarAutomovil();
+
+    cout << "\nModificando estado (suben 5 pasajeros y aumenta velocidad a 89 km/h)..." << endl;
+    j.subirPasajeros(5);
+    j.cambiarVelocidad(89.0);
+    cout << "Estado actualizado:" << endl;
+    j.mostrarAutomovil();
+
+    cout << "\n--- CAMION ---" << endl;
+    Camion k("S0N-124", "Azul", "Hino", 50.0, 1500.0);
+    cout << "Estado inicial:" << endl;
+    k.mostrarCamion();
+
+    cout << "\nModificando estado (se ajusta la carga a 2500 kg y velocidad a 65 km/h)..." << endl;
+    k.cambiarCarga(2500.0);
+    k.cambiarVelocidad(65.0);
+    cout << "Estado actualizado:" << endl;
+    k.mostrarCamion();
+
+    return 0;
 }
+
